@@ -25,8 +25,13 @@ public class ArgumentProcess {
     }
 
     public ArgumentProcess(String[] args) {
-        CheckFirstParam(args[0]);
-        inputFileName = fileExists(args[1]);
+        try {
+            CheckFirstParam(args[0]);
+            inputFileName = fileExists(args[1]);
+        }
+        catch (Exception e){
+            throw new ArgumentException("You mush write 2 parameters ");
+        }
         if(args.length >= 4){
             inputKeyFind = CheckThirdParam(args[2]);
             inputFind = FindParam(args[3]);
