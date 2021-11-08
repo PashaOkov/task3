@@ -11,10 +11,15 @@ public class AbstractComparator {
         return Mask;
     }
 
-    public void start() {
+    public boolean startCompare(String context) {
+        start();
+        return compare(context);
     }
 
-    public boolean compare(String context){
+    protected void start() {
+    }
+
+    protected boolean compare(String context){
         return false;
     }
 

@@ -17,7 +17,6 @@ public class NodeParser extends DefaultHandler {
 
     public NodeParser(AbstractComparator comparator) {
         this.comparator = comparator;
-        comparator.start();
     }
 
     @Override
@@ -54,11 +53,8 @@ public class NodeParser extends DefaultHandler {
             if(IsFile) {
                 file = new String(ch, start, length);
                 PathToFile.add(file);
-                if(comparator.compare(file)) {
-                    for(String a : PathToFile){
-                        System.out.print(a);
-                    }
-                    System.out.println();
+                if(comparator.startCompare(file)) {
+                    output();
                 }
                 PathToFile.remove(PathToFile.size() - 1);
             }
@@ -73,4 +69,10 @@ public class NodeParser extends DefaultHandler {
 
     }
 
+    private void output() {
+        for(String a : PathToFile){
+            System.out.print(a);
+        }
+        System.out.println();
+    }
 }
