@@ -9,6 +9,7 @@ public class ArgumentProcess {
     private final String inputFileName;
     private SearchType searchType = SearchType.Full;
     private String Mask = null;
+    private boolean IsMask = false;
 
     public String getInputFileName() {
         return inputFileName;
@@ -31,8 +32,8 @@ public class ArgumentProcess {
             throw new ArgumentException("You must write 2 parameters");
         }
         if(args.length >= 4){
-            searchType = CheckThirdParam(args[2]);
             Mask = FindParam(args[3]);
+            searchType = CheckThirdParam(args[2]);
         }
     }
 
@@ -53,19 +54,21 @@ public class ArgumentProcess {
     }
 
     private SearchType CheckThirdParam(String param){
-        if(param.equals(XConstant.KEY_MACK)){
-            return SearchType.Equals;
-        } if(param.equals(XConstant.KEY_MACK_REGULAR)) {
+        if (param.equals(XConstant.KEY_MACK_REGULAR)) {
             return SearchType.Regular;
+        } else if (IsMask) {
+                return SearchType.Mask;
+        } else if (param.equals(XConstant.KEY_MACK)) {
+            return SearchType.Equals;
         }
-        else{
+        else {
             throw new ArgumentException("Third param must be -s or -S");
         }
     }
 
     private String FindParam(String param){
         if((param.charAt(0) == XConstant.APOSTROPHE1)&&(param.charAt(param.length() - 1) == XConstant.APOSTROPHE2)){
-            searchType = SearchType.Mask;
+            IsMask = true;
             param = param.substring(1, param.length()-1);
         }
         return param;
