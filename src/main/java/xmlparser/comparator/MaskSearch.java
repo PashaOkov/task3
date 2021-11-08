@@ -13,7 +13,7 @@ public class MaskSearch extends AbstractComparator{
         pattern = Pattern.compile(newMask);
     }
 
-    public String processingMask(String mask) {
+    private String processingMask(String mask) {
         StringBuilder newMask = new StringBuilder();
         char[] chars = mask.toCharArray();
         for (char ch: chars) {
