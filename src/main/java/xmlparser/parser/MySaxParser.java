@@ -1,4 +1,7 @@
-package com.company;
+package xmlparser.parser;
+
+import xmlparser.argument.ArgumentException;
+import xmlparser.comparator.AbstractComparator;
 
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
@@ -6,14 +9,15 @@ import java.io.File;
 
 public class MySaxParser {
 
-    public void parse(ArgumentProcess arguments) {
+    public MySaxParser(AbstractComparator comparator, String files) {
 
         SAXParserFactory factory = SAXParserFactory.newInstance();
-        NodeParser handler = new NodeParser(arguments);
+        NodeParser handler = new NodeParser(comparator);
 
         SAXParser parser = factoryParser(factory);
-        File file = new File(arguments.getInputFileName());
+        File file = new File(files);
         ParserParse(parser, file, handler);
+
     }
 
     private SAXParser factoryParser(SAXParserFactory factory){

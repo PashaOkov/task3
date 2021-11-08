@@ -1,40 +1,38 @@
-package com.company;
+package xmlparser.argument;
+
+import xmlparser.comparator.SearchType;
+import xmlparser.constants.XConstant;
 
 import java.io.File;
 
 public class ArgumentProcess {
     private final String inputFileName;
-    private String inputKeyFind = null;
-    private String inputFind = null;
-    private Boolean IsMack = false;
+    private SearchType searchType = SearchType.Full;
+    private String Mask = null;
 
     public String getInputFileName() {
         return inputFileName;
     }
 
-    public String getInputKeyFind() {
-        return inputKeyFind;
+    public SearchType getSearchType() {
+        return searchType;
     }
 
-    public String getInputFind() {
-        return inputFind;
-    }
-
-    public Boolean getMack() {
-        return IsMack;
+    public String getMask() {
+        return Mask;
     }
 
     public ArgumentProcess(String[] args) {
-        if(args.length >= 2) {
+        try {
             CheckFirstParam(args[0]);
             inputFileName = fileExists(args[1]);
         }
-        else{
-            throw  new ArgumentException("You mush write 2 parameters ");
+        catch (ArrayIndexOutOfBoundsException e){
+            throw new ArgumentException("You must write 2 parameters");
         }
         if(args.length >= 4){
-            inputKeyFind = CheckThirdParam(args[2]);
-            inputFind = FindParam(args[3]);
+            searchType = CheckThirdParam(args[2]);
+            Mask = FindParam(args[3]);
         }
     }
 
@@ -47,16 +45,18 @@ public class ArgumentProcess {
     private String fileExists(String fileName) {
         String path = System.getProperty("user.dir");
         File f = new File(path + File.separator + fileName);
-        if(f.exists() && f.isFile()){
+        if(f.exists() && f.isFile()) {
             return f.getAbsolutePath();
-        }else{
+        } else {
             throw new ArgumentException("input file doesn't exists");
         }
     }
 
-    private String CheckThirdParam(String param){
-        if(param.equals(XConstant.KEY_MACK) || (param.equals(XConstant.KEY_MACK_REGULAR))){
-            return param;
+    private SearchType CheckThirdParam(String param){
+        if(param.equals(XConstant.KEY_MACK)){
+            return SearchType.Equals;
+        } if(param.equals(XConstant.KEY_MACK_REGULAR)) {
+            return SearchType.Regular;
         }
         else{
             throw new ArgumentException("Third param must be -s or -S");
@@ -65,7 +65,7 @@ public class ArgumentProcess {
 
     private String FindParam(String param){
         if((param.charAt(0) == XConstant.APOSTROPHE1)&&(param.charAt(param.length() - 1) == XConstant.APOSTROPHE2)){
-            this.IsMack = true;
+            searchType = SearchType.Mask;
             param = param.substring(1, param.length()-1);
         }
         return param;

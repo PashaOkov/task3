@@ -1,4 +1,4 @@
-package com.company;
+package xmlparser.argument;
 
 public class ArgumentException extends RuntimeException{
     public ArgumentException(String message) {

@@ -1,4 +1,4 @@
-package com.company;
+package xmlparser.constants;
 
 public class XConstant {
     public static final String KEY_INPUT_FILE = "-f";
