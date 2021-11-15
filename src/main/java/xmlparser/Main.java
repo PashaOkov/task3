@@ -4,7 +4,7 @@ import xmlparser.argument.ArgumentException;
 import xmlparser.argument.ArgumentProcess;
 import xmlparser.comparator.AbstractComparator;
 import xmlparser.comparator.FactoryMethod;
-import xmlparser.parser.MySaxParser;
+import xmlparser.parser.SaxParser;
 
 public class Main {
 
@@ -15,9 +15,9 @@ public class Main {
 
             FactoryMethod factoryMethod = new FactoryMethod();
             AbstractComparator comparator = factoryMethod.getComparator(arguments.getSearchType());
-            comparator.SetMask(arguments.getMask());
+            comparator.setMask(arguments.getMask());
 
-            new MySaxParser(comparator, arguments.getInputFileName());
+            new SaxParser(comparator, arguments.getInputFileName());
 
         } catch (ArgumentException e) {
             System.out.println(e.getMessage());

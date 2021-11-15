@@ -7,12 +7,12 @@ public class RegularSearch extends AbstractComparator{
     private Pattern pattern;
 
     @Override
-    protected void start() {
+    public void start() {
         pattern = Pattern.compile(getMask());
     }
 
     @Override
-    protected boolean compare(String context){
+    public boolean compare(String context){
         Matcher m = pattern.matcher(context);
         return m.matches();
     }

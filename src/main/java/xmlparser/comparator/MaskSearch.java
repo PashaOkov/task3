@@ -8,7 +8,7 @@ public class MaskSearch extends AbstractComparator{
     private Pattern pattern;
 
     @Override
-    protected void start() {
+    public void start() {
         String newMask = processingMask(getMask());
         pattern = Pattern.compile(newMask);
     }
@@ -35,7 +35,7 @@ public class MaskSearch extends AbstractComparator{
     }
 
     @Override
-    protected boolean compare(String context){
+    public boolean compare(String context){
         Matcher m = pattern.matcher(context);
         return m.matches();
     }

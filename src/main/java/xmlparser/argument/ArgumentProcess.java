@@ -1,6 +1,6 @@
 package xmlparser.argument;
 
-import xmlparser.comparator.SearchType;
+import xmlparser.constants.SearchType;
 import xmlparser.constants.XConstant;
 
 import java.io.File;
@@ -8,8 +8,8 @@ import java.io.File;
 public class ArgumentProcess {
     private final String inputFileName;
     private SearchType searchType = SearchType.Full;
-    private String Mask = null;
-    private boolean IsMask = false;
+    private String mask = null;
+    private boolean isMask = false;
 
     public String getInputFileName() {
         return inputFileName;
@@ -20,7 +20,7 @@ public class ArgumentProcess {
     }
 
     public String getMask() {
-        return Mask;
+        return mask;
     }
 
     public ArgumentProcess(String[] args) {
@@ -32,7 +32,7 @@ public class ArgumentProcess {
             throw new ArgumentException("You must write 2 parameters");
         }
         if(args.length >= 4){
-            Mask = FindParam(args[3]);
+            mask = FindParam(args[3]);
             searchType = CheckThirdParam(args[2]);
         }
     }
@@ -56,7 +56,7 @@ public class ArgumentProcess {
     private SearchType CheckThirdParam(String param){
         if (param.equals(XConstant.KEY_MACK_REGULAR)) {
             return SearchType.Regular;
-        } else if (IsMask) {
+        } else if (isMask) {
                 return SearchType.Mask;
         } else if (param.equals(XConstant.KEY_MACK)) {
             return SearchType.Equals;
@@ -68,7 +68,7 @@ public class ArgumentProcess {
 
     private String FindParam(String param){
         if((param.charAt(0) == XConstant.APOSTROPHE1)&&(param.charAt(param.length() - 1) == XConstant.APOSTROPHE2)){
-            IsMask = true;
+            isMask = true;
             param = param.substring(1, param.length()-1);
         }
         return param;
